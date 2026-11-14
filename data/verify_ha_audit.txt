@@ -13,28 +13,32 @@ Audit of the constants in Ha (2016), Sections 3-4
     rho = 1/10, B = 2: q0 = 2   (fails for q in [])
 
   Table 2: corrected criterion (Proposition 4.1),
-  Xi = C_(q) * sum_{j>=J} w_q(j) q^(-c2(rho) j) + q^(-B)/(1-2q^(-4)) < 1
+  Xi = sum_{j>=J} w_q(j) q^(-c2(rho) j) + q^(-B)/(1-2q^(-4)) < 1
     rho*  J* |  q0 (B=1)   Xi(q0) |  q0 (B=2)   Xi(q0) |  Xi(q=16,B=1)
-     1/4   4 |        16   0.8040 |        13   0.9507 |        0.8040
-     1/5   5 |         5   0.9111 |         5   0.7506 |        0.1098
-     1/6   6 |         4   0.6138 |         4   0.4249 |        0.0658
-     1/8   8 |         3   0.4750 |         3   0.2472 |        0.0625
-    1/10  10 |         3   0.3573 |         2   0.8362 |        0.0625
+     1/4   4 |        13   0.9491 |        13   0.8780 |        0.7576
+     1/5   5 |         5   0.7690 |         5   0.6085 |        0.1069
+     1/6   6 |         4   0.5234 |         3   0.9089 |        0.0656
+     1/8   8 |         3   0.4306 |         3   0.2027 |        0.0625
+    1/10  10 |         2   0.8467 |         2   0.5610 |        0.0625
   Table 3 / Theorem 1.1(c): the criterion (4.1),
-    S(r/n, J) + S((r+1)/n, J*)/(q-1) + n q^(r-n/4)/(1-2q^(-n/2)) < 1,
+    (q-2)/(q-1) S(r/n, J) + S((r+1)/n, J*)/(q-1) + n q^(r-n/4)/(1-2q^(-n/2)) < 1,
   for the three families of Ha's Theorem 1.3 (n scanned up to 3000):
     q=16, r=floor(n/4-log_q n-1)   holds for all n >=   12 (value at Ha's n = 8: nan; value at n0: 0.0492)
-    q=5,  r=floor(n/5)             holds for all n >=   71 (value at Ha's n = 97: 0.6943; value at n0: 0.8918)
-    q=7,  r=floor(n/5)             holds for all n >=   41 (value at Ha's n = 97: 0.2562; value at n0: 0.7899)
-    q=2,  r=floor(n/10)            holds for all n >=   81 (value at Ha's n = 52: 1.4662; value at n0: 0.9678)
-    q=3,  r=floor(n/10)            holds for all n >=   21 (value at Ha's n = 52: 0.0581; value at n0: 0.8756)
-    q=4,  r=floor(n/10)            holds for all n >=   13 (value at Ha's n = 52: 0.0073; value at n0: 0.6937)
+    q=5,  r=floor(n/5)             holds for all n >=   66 (value at Ha's n = 97: 0.5687; value at n0: 0.8302)
+    q=7,  r=floor(n/5)             holds for all n >=   41 (value at Ha's n = 97: 0.2221; value at n0: 0.7567)
+    q=2,  r=floor(n/10)            holds for all n >=   61 (value at Ha's n = 52: 1.0890; value at n0: 0.9735)
+    q=3,  r=floor(n/10)            holds for all n >=   21 (value at Ha's n = 52: 0.0493; value at n0: 0.8424)
+    q=4,  r=floor(n/10)            holds for all n >=   13 (value at Ha's n = 52: 0.0065; value at n0: 0.6914)
   tail n > 3000 (rho <= 1/m, rho* <= 1/m + 1/3000, J, J* >= m):
-    q = 5, m = 5: bound 0.7119  ok
-    q = 2, m = 10: bound 0.5530  ok
-    q = 3, m = 10: bound 0.0156  ok
+    q = 5, m = 5: bound (4.2) 0.5741  ok
+    q = 2, m = 10: bound (4.2) 0.2778  ok
+    q = 3, m = 10: bound (4.2) 0.0105  ok
+  the simpler bound (4.2), nonincreasing in q, on the scanned range:
+    q = 7, r = floor(n/5), 66 <= n <= 3000: max 0.4595  ok
+    q = 4, r = floor(n/10), 21 <= n <= 3000: max 0.3651  ok
+    q = 2, r = floor(n/10), n >= 52: criterion (4.1) fails exactly for n in [52, 53, 60]  ok
   largest rho* = 1/m (J* = m) for which the criterion holds, B = 1:
-    q =  2: m >= 11
+    q =  2: m >= 10
     q =  3: m >= 7
     q =  4: m >= 6
     q =  5: m >= 5

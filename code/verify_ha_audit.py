@@ -53,7 +53,7 @@ def weight(q, j):
 
 def restored(q, rho, J, B, n_min=8):
     """Left side of the criterion of Proposition 4.1:
-    C_(q) * sum_{j >= J} w_q(j) q^(-c2 j) + q^(-B)/(1 - 2 q^(-n_min/2))."""
+    sum_{j >= J} w_q(j) q^(-c2 j) + q^(-B)/(1 - 2 q^(-n_min/2))."""
     c2 = (1 - 3 * rho) / (1 + rho)
     s, j = 0.0, J
     while True:
@@ -64,7 +64,7 @@ def restored(q, rho, J, B, n_min=8):
             break
         if j > 200000:
             break
-    return q / (q - 1) * s + q ** (-B) / (1 - 2 * q ** (-n_min / 2))
+    return s + q ** (-B) / (1 - 2 * q ** (-n_min / 2))
 
 def series(q, rho, J):
     c2 = (1 - 3 * rho) / (1 + rho)
@@ -83,7 +83,7 @@ def exact_criterion(q, n, r):
     Js = -(-n // (r + 2))
     if 3 * (r + 1) >= n:
         return float('inf')
-    return (series(q, r / n, J) + series(q, (r + 1) / n, Js) / (q - 1)
+    return ((q - 2) / (q - 1) * series(q, r / n, J) + series(q, (r + 1) / n, Js) / (q - 1)
             + n * q ** (r - n / 4) / (1 - 2 * q ** (-n / 2)))
 
 def prime_powers(limit):
@@ -120,7 +120,7 @@ def section_F():
         say(f"    rho = 1/{round(1/rho)}, B = {B}: q0 = {q0}   (fails for q in {bad})")
     say()
     say("  Table 2: corrected criterion (Proposition 4.1),")
-    say("  Xi = C_(q) * sum_{j>=J} w_q(j) q^(-c2(rho) j) + q^(-B)/(1-2q^(-4)) < 1")
+    say("  Xi = sum_{j>=J} w_q(j) q^(-c2(rho) j) + q^(-B)/(1-2q^(-4)) < 1")
     say(f"  {'rho*':>6} {'J*':>3} | {'q0 (B=1)':>9} {'Xi(q0)':>8} | {'q0 (B=2)':>9} {'Xi(q0)':>8} |"
         f" {'Xi(q=16,B=1)':>13}")
     for m in (4, 5, 6, 8, 10):
@@ -133,7 +133,7 @@ def section_F():
         row += f" {restored(16, rho, m, 1):>13.4f}"
         say(row)
     say("  Table 3 / Theorem 1.1(c): the criterion (4.1),")
-    say("    S(r/n, J) + S((r+1)/n, J*)/(q-1) + n q^(r-n/4)/(1-2q^(-n/2)) < 1,")
+    say("    (q-2)/(q-1) S(r/n, J) + S((r+1)/n, J*)/(q-1) + n q^(r-n/4)/(1-2q^(-n/2)) < 1,")
     say("  for the three families of Ha's Theorem 1.3 (n scanned up to 3000):")
     fams = (("q=16, r=floor(n/4-log_q n-1)", 16, lambda n: math.floor(n / 4 - math.log(n, 16) - 1), 8),
             ("q=5,  r=floor(n/5)", 5, lambda n: n // 5, 97),
@@ -155,9 +155,16 @@ def section_F():
             f"value at n0: {vals[n0]:.4f})")
     say("  tail n > 3000 (rho <= 1/m, rho* <= 1/m + 1/3000, J, J* >= m):")
     for q, m in ((5, 5), (2, 10), (3, 10)):
-        v = (series(q, 1 / m, m) + series(q, 1 / m + 1 / 3000, m) / (q - 1)
-             + 3000 * q ** (-3000 * (1 / 4 - 1 / m)) )
-        say(f"    q = {q}, m = {m}: bound {v:.4f}  {check(v < 1, f'tail q={q} m={m}')}")
+        v = series(q, 1 / m + 1 / 3000, m) + 3000 * q ** (-3000 * (1 / 4 - 1 / m))
+        say(f"    q = {q}, m = {m}: bound (4.2) {v:.4f}  {check(v < 1, f'tail q={q} m={m}')}")
+    say("  the simpler bound (4.2), nonincreasing in q, on the scanned range:")
+    for q, m, n0 in ((7, 5, 66), (4, 10, 21)):
+        v = max(series(q, (n // m + 1) / n, -(-n // (n // m + 2)))
+                + n * q ** (n // m - n / 4) / (1 - 2 * q ** (-n / 2)) for n in range(n0, 3001))
+        say(f"    q = {q}, r = floor(n/{m}), {n0} <= n <= 3000: max {v:.4f}  {check(v < 1, f'simple q={q}')}")
+    bad2 = [n for n in range(52, 3001) if exact_criterion(2, n, n // 10) >= 1]
+    say(f"    q = 2, r = floor(n/10), n >= 52: criterion (4.1) fails exactly for n in {bad2}  "
+        f"{check(bad2 == [52, 53, 60], 'q=2 gaps')}")
     say("  largest rho* = 1/m (J* = m) for which the criterion holds, B = 1:")
     for q in (2, 3, 4, 5, 7, 8, 9, 16):
         ms = [m for m in range(4, 400) if restored(q, 1 / m, m, 1) < 1]

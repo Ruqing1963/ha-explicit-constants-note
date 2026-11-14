@@ -9,8 +9,8 @@ polynomial of degree `n` over `F_q` with `r` prescribed coefficients exists. Thi
 * With the formulas as printed, the sufficient condition fails at `(q, rho, B) = (16, 1/4, 1)` and `(5, 1/5, 2)`
   (right-hand side 1.3004 and 1.0121, not 0.994 and 0.884).
 * Three steps need repair: inequality (13), `J` versus `1/rho`, and denominators divisible by `T`.
-* A corrected criterion recovers the first two assertions (the second already for `n >= 71`) and the third for
-  `q >= 3`; for `q = 2` it needs `n >= 81` instead of `n >= 52`.
+* A corrected criterion recovers the first two assertions (the second already for `n >= 66`) and the third for
+  `q >= 3`; for `q = 2` only `n = 52, 53, 60` remain open.
 
 The statements are conditional on Lemmas 2.3 and 2.8 of Ha's paper as printed.
 

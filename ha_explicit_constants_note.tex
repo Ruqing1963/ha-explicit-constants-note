@@ -38,8 +38,8 @@ Ha proved that there are irreducible polynomials of degree $n$ over $\F_q$ with 
 arbitrary positions when $r\le(1/4-\epsilon)n$ and $q$ is large, and gave three explicit ranges of $(q,n,r)$. We
 recompute the explicit constants of that paper. With the formulas as printed, the sufficient condition fails at the
 boundary of two of the three ranges, and three steps of the argument need repair. We give a corrected criterion. It
-recovers the first two explicit assertions (the second already for $n\ge71$ instead of $n\ge97$) and the third for
-$q\ge3$; for $q=2$ it requires $n\ge81$ instead of $n\ge52$.
+recovers the first two explicit assertions (the second already for $n\ge66$ instead of $n\ge97$) and the third for
+$q\ge3$; for $q=2$ it leaves open only $n=52,53,60$.
 \end{abstract}
 
 \maketitle
@@ -57,7 +57,7 @@ $\rho=r/X$, $\cS_{\mathcal I}(\alpha)$ and $\cS(\alpha)$ are the exponential sum
 the irreducibles, $C_{(x)}=x/(x-1)$, and $J=\lceil X/(r+1)\rceil$.
 
 \begin{theorem}\label{thm:Ha}
-Let $C_3,C_8$ be the constants of \cite[\S\S3--4]{Ha}.
+Let $C_1,\dots,C_8$ be the constants of \cite[\S\S3--4]{Ha}.
 \begin{enumerate}
 \item[(a)] With the formulas as printed, the sufficient condition $1>C_8q^{-C_2/\rho}+q^{-B}$ of \cite[\S4]{Ha} fails
 at $(q,\rho,B)=(16,\frac14,1)$ and at $(5,\frac15,2)$: its right-hand side is $1.3004$ and $1.0121$, not $0.994$ and
@@ -67,12 +67,12 @@ $\lceil n/(r+1)\rceil$ by $1/\rho$, and the treatment of denominators divisible 
 \cite[Lemmas~2.6, 2.7]{Ha} do not apply.
 \item[(c)] A corrected criterion (Proposition~\ref{prop:restored}) gives: an irreducible polynomial of degree $n$ with
 $r$ prescribed coefficients (constant term not prescribed to $0$) exists if $q\ge16$ and
-$1\le r\le n/4-\log_qn-1$; if $q\ge5$, $n\ge71$ and $r\le n/5$; if $q\ge3$, $n\ge21$ and $r\le n/10$; and if $q=2$,
-$n\ge81$ and $r\le n/10$.
+$1\le r\le n/4-\log_qn-1$; if $q\ge5$, $n\ge66$ and $r\le n/5$; if $q\ge3$, $n\ge21$ and $r\le n/10$; and if $q=2$,
+$r\le n/10$ and $n\ge54$, $n\ne60$.
 \end{enumerate}
 \end{theorem}
 
-Part (c) recovers \cite[Theorem~1.3]{Ha} except for $q=2$, $52\le n\le80$, $r\le n/10$, which our criterion does not
+Part (c) recovers \cite[Theorem~1.3]{Ha} except for $q=2$, $n\in\{52,53,60\}$, $r=\lfloor n/10\rfloor$, which our criterion does not
 reach. Part (a) is proved in Section~\ref{sec:printed}, part (b) in Section~\ref{sec:repair} and part (c) in
 Section~\ref{sec:criterion}. The asymptotic results of \cite{Ha} are not affected. The numerical statements are
 checked by the script \texttt{code/verify\_ha\_audit.py} (pure Python).
@@ -126,7 +126,8 @@ replaces both.
 Let $g_0$ be monic and prime to $T$, $c$ prime to $g_0$, and $b\in\F_q^\times$.
 \begin{enumerate}
 \item[(a)] If $0\in\mathcal I$, then $\cS_{\mathcal I}(b/T+c/g_0)=\mathbf e(a_0b/T)\,\cS_{\mathcal I}(c/g_0)$.
-\item[(b)] If $0\notin\mathcal I$, then $\sum_{b\ne0}|\cS_{\mathcal I}(b/T+c/g_0)|\le q\,|\cS_{\mathcal I^+}(c/g_0)|$,
+\item[(b)] If $0\notin\mathcal I$, then
+$|\cS_{\mathcal I}(c/g_0)|+\sum_{b\ne0}|\cS_{\mathcal I}(b/T+c/g_0)|=q\,|\cS_{\mathcal I^+}(c/g_0)|$,
 where $\mathcal I^+=\mathcal I\cup\{0\}$.
 \end{enumerate}
 \end{lemma}
@@ -135,15 +136,21 @@ where $\mathcal I^+=\mathcal I\cup\{0\}$.
 By \cite[(8)]{Ha}, $\cS_{\mathcal I}(\alpha)=q^{X-r}\mathbf e(\alpha T^X)\prod_{j\in\mathcal I}\mathbf e(a_jT^j\alpha)$
 if $\alpha_{-j-1}=0$ for all $j\notin\mathcal I$, $0\le j<X$, and $\cS_{\mathcal I}(\alpha)=0$ otherwise. Adding
 $b/T$ changes only the coefficient $\alpha_{-1}$, by $b$. If $0\in\mathcal I$ the vanishing conditions are unchanged
-and the product changes by $\mathbf e(a_0b/T)$. If $0\notin\mathcal I$, the condition $\alpha_{-1}=0$ holds for at
-most one $b$, and the remaining conditions are those of $\mathcal I^+$, whose sum has modulus $q^{X-r-1}$.
+and the product changes by $\mathbf e(a_0b/T)$. If $0\notin\mathcal I$, the condition $\alpha_{-1}=0$ holds for
+exactly one $b\in\F_q$, the value $b=0$ included, and the remaining conditions are those of $\mathcal I^+$, whose sum
+has modulus $q^{X-r-1}$.
 \end{proof}
 
 Since $\mu(Tg_0)/\phi(Tg_0)=-\mu(g_0)/((q-1)\phi(g_0))$ and $\sum_{b\ne0}\mathbf e(-a_0b/T)\in\{q-1,-1\}$, part (a)
 shows that for $0\in\mathcal I$ the terms with $g=Tg_0$ equal those with $g=g_0$ times $-1$ (if $a_0=0$) or
 $1/(q-1)$ (if $a_0\ne0$): this is the singular series $\mathfrak S$ of \cite[(2)]{Ha}, and it justifies the factor
-$C_{(q)}$ in $C_8$ in that case. For $0\notin\mathcal I$, part (b) gives the factor $1/(q-1)$ at the cost of
-replacing $\mathcal I$ by $\mathcal I^+$.
+$C_{(q)}$ in $C_8$ in that case. For $0\notin\mathcal I$, the terms $g=g_0$ and $g=Tg_0$ are supported on
+disjoint sets of $c$ by part (b), and together they are bounded by
+\[
+|\cS_{\mathcal I}(c/g_0)|+\frac1{q-1}\sum_{b\ne0}|\cS_{\mathcal I}(b/T+c/g_0)|
+=\frac{q-2}{q-1}\,|\cS_{\mathcal I}(c/g_0)|+\frac q{q-1}\,|\cS_{\mathcal I^+}(c/g_0)| .
+\]
+For $q=2$ the first term disappears.
 
 \section{A corrected criterion}\label{sec:criterion}
 For $0\le\rho<1/3$ let $c_2(\rho)=(1-3\rho)/(1+\rho)$, let $w_q(j)=e$ for $j\le q$ and
@@ -156,7 +163,7 @@ $w_q(j)=e^\gamma(\log_qj+1)$ for $j>q$, and
 Let $q$ be a prime power, $\mathcal I\subseteq\{0,\dots,n-1\}$ with $|\mathcal I|=r$ and $3(r+1)<n$, and let
 $a_j\in\F_q$ for $j\in\mathcal I$, with $a_0\ne0$ if $0\in\mathcal I$. If
 \begin{equation}\label{eq:crit}
-\Sigma_q\Bigl(\frac rn,\Bigl\lceil\frac n{r+1}\Bigr\rceil\Bigr)
+\frac{q-2}{q-1}\,\Sigma_q\Bigl(\frac rn,\Bigl\lceil\frac n{r+1}\Bigr\rceil\Bigr)
 +\frac1{q-1}\,\Sigma_q\Bigl(\frac{r+1}n,\Bigl\lceil\frac n{r+2}\Bigr\rceil\Bigr)
 +\frac{n\,q^{\,r-n/4}}{1-2q^{-n/2}}<1,
 \end{equation}
@@ -182,7 +189,7 @@ E(\mathcal I)=q^{-(X-r)}\sum_{g_0}\frac{\mu(g_0)^2}{\phi(g_0)}\sum_{(c,g_0)=1}|\
 \]
 over monic $g_0\ne1$ prime to $T$ with $\deg g_0\le X/2$. By Lemma~\ref{lem:Tg} the remaining terms are bounded by
 $\pi_q(X)q^{-r}\mathfrak S\,E(\mathcal I)$ if $0\in\mathcal I$, and by
-$\pi_q(X)q^{-r}\bigl(E(\mathcal I)+E(\mathcal I^+)/(q-1)\bigr)$ if $0\notin\mathcal I$.
+$\pi_q(X)q^{-r}\bigl((q-2)E(\mathcal I)+E(\mathcal I^+)\bigr)/(q-1)$ if $0\notin\mathcal I$.
 
 To bound $E(\mathcal I)$: by \cite[Lemma~2.7]{Ha} only $\deg g_0\ge J=\lceil X/(r+1)\rceil$ occurs. Fix $j$ with
 $J\le j\le X/2$. Choose a window of $2j$ consecutive positions in $\{0,\dots,X-1\}$ containing at most
@@ -198,13 +205,20 @@ $q^{-2j}$-separated,
 \]
 With $|g_0|/\phi(g_0)\le w_q(\deg g_0)$ \cite[Lemma~2.3]{Ha}, this gives
 $E(\mathcal I)\le\Sigma_q(\rho,J)$, and likewise $E(\mathcal I^+)\le\Sigma_q((r+1)/n,\lceil n/(r+2)\rceil)$. Finally
-$\pi_q(X)\ge\hat XX^{-1}(1-2\hat X^{-1/2})$ \cite[Lemma~2.2]{Ha}, so $N>0$ as soon as
-$1-E(\mathcal I)-E(\mathcal I^+)/(q-1)>Xq^{r-X/4}/(1-2q^{-X/2})$.
+$\pi_q(X)\ge\hat XX^{-1}(1-2\hat X^{-1/2})$ \cite[Lemma~2.2]{Ha}, so, for $0\notin\mathcal I$, $N>0$ as soon as
+$1-\bigl((q-2)E(\mathcal I)+E(\mathcal I^+)\bigr)/(q-1)>Xq^{r-X/4}/(1-2q^{-X/2})$. For $0\in\mathcal I$ it suffices
+that $1-E(\mathcal I)$ exceeds the same quantity, and this follows from \eqref{eq:crit} because
+$\Sigma_q(\rho,J)\le\Sigma_q((r+1)/n,\lceil n/(r+2)\rceil)$.
 \end{proof}
 
-The left side of \eqref{eq:crit} is nonincreasing in $q$ and nondecreasing in $r$. Table~\ref{tab:restored} gives,
+The left side of \eqref{eq:crit} is nondecreasing in $r$, and it is at most
+\begin{equation}\label{eq:simple}
+\Sigma_q\Bigl(\frac{r+1}n,\Bigl\lceil\frac n{r+2}\Bigr\rceil\Bigr)+\frac{n\,q^{\,r-n/4}}{1-2q^{-n/2}},
+\end{equation}
+which for $r\le n/4$ is nonincreasing in $q$: when $q$ passes $j$ the weight $w_q(j)$ drops from
+$e^\gamma(\log_qj+1)>2e^\gamma$ to $e<2e^\gamma$. Table~\ref{tab:restored} gives,
 for hypotheses of the form $(r+1)/n\le\rho^*$, $\lceil n/(r+2)\rceil\ge J^*$ and $r\le n/4-\log_qn-B$, the least
-$q_0$ such that the resulting bound $C_{(q)}\Sigma_q(\rho^*,J^*)+q^{-B}/(1-2q^{-4})$ is less than $1$ for all prime
+$q_0$ such that the resulting bound $\Sigma_q(\rho^*,J^*)+q^{-B}/(1-2q^{-4})$ for \eqref{eq:simple} is less than $1$ for all prime
 powers $q\ge q_0$.
 
 \begin{table}[ht]
@@ -215,24 +229,27 @@ powers $q\ge q_0$.
 \toprule
 $\rho^*$ & $J^*$ & $q_0$ ($B=1$) & bound & $q_0$ ($B=2$) & bound\\
 \midrule
-$1/4$ & $4$ & $16$ & $0.8040$ & $13$ & $0.9507$\\
-$1/5$ & $5$ & $5$ & $0.9111$ & $5$ & $0.7506$\\
-$1/6$ & $6$ & $4$ & $0.6138$ & $4$ & $0.4249$\\
-$1/8$ & $8$ & $3$ & $0.4750$ & $3$ & $0.2472$\\
-$1/10$ & $10$ & $3$ & $0.3573$ & $2$ & $0.8362$\\
+$1/4$ & $4$ & $13$ & $0.9491$ & $13$ & $0.8780$\\
+$1/5$ & $5$ & $5$ & $0.7690$ & $5$ & $0.6085$\\
+$1/6$ & $6$ & $4$ & $0.5234$ & $3$ & $0.9089$\\
+$1/8$ & $8$ & $3$ & $0.4306$ & $3$ & $0.2027$\\
+$1/10$ & $10$ & $2$ & $0.8467$ & $2$ & $0.5610$\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{proof}[Proof of Theorem~\ref{thm:Ha}]
-(a) is Table~\ref{tab:ha}, and (b) is the discussion above. For (c): let $q\ge16$ and $1\le r\le n/4-\log_qn-1$. Then
+(a) is Table~\ref{tab:ha}, and (b) is the discussion above. For (c): let $q\ge16$ and $1\le r\le n/4-\log_qn-1$ (so $n\ge9$). Then
 $(r+1)/n\le1/4$. For $r\ge2$, $n/(r+2)\ge4(r+1+\log_qn)/(r+2)>3$, so $J^*\ge4$, and the first line of
 Table~\ref{tab:restored} applies. The case $r=1$ is the Hansen--Mullen conjecture, proved in \cite{Wan,HamMullen}.
-For the other two families we evaluated the left side of \eqref{eq:crit} with $r=\lfloor n/5\rfloor$, $q=5$ and
-with $r=\lfloor n/10\rfloor$, $q=2,3$, for all $n\le3000$: it is less than $1$ for $n\ge71$, for $n\ge81$ and for
-$n\ge21$ respectively (at $q=2$, $n=52$ it equals $1.4662$). For $n>3000$ we have $\rho\le1/m$,
-$\rho^*\le1/m+1/3000$ and $J,J^*\ge m$ with $m=5,10$, and \eqref{eq:crit} is bounded by $0.7119$, $0.5530$ and
-$0.0156$ in the three cases. Monotonicity in $q$ and $r$ completes the proof.
+For the other two families we evaluated the left side of \eqref{eq:crit} for all $n\le3000$, with
+$r=\lfloor n/5\rfloor$, $q=5$ and with $r=\lfloor n/10\rfloor$, $q=2,3$: it is less than $1$ for $n\ge66$; for
+$n\ge54$, $n\ne60$; and for $n\ge21$, respectively (at $q=2$ it equals $1.0890$ for $n=52$). For larger $q$ we use
+\eqref{eq:simple}: at $q=7$, $r=\lfloor n/5\rfloor$ it is at most $0.4595$ for $66\le n\le3000$, and at $q=4$,
+$r=\lfloor n/10\rfloor$ it is at most $0.3651$ for $21\le n\le3000$. For $n>3000$ we have $\rho\le1/m$,
+$\rho^*\le1/m+1/3000$ and $J,J^*\ge m$ with $m=5,10$, and \eqref{eq:simple} is bounded by $0.5741$ for $q\ge5$,
+$m=5$, by $0.2778$ for $q=2$, $m=10$ and by $0.0105$ for $q\ge3$, $m=10$. Monotonicity in $r$, and in $q$ for
+\eqref{eq:simple}, completes the proof.
 \end{proof}
 
 Table~\ref{tab:status} and Figure~\ref{fig:ha} summarise the outcome.
@@ -243,7 +260,7 @@ Table~\ref{tab:status} and Figure~\ref{fig:ha} summarise the outcome.
 \caption{Left: the quantity that must be less than $1$, at $\rho=1/4$, $B=1$: with the constants as printed in
 \cite{Ha} (it exceeds $1$ for $q<23$; the cross marks the value $0.994$ stated there for $q=16$), and the bound of
 Proposition~\ref{prop:restored} with $\rho^*=1/4$, $J^*=4$. Right: the left side of \eqref{eq:crit} as a function
-of $n$; it drops below $1$ for good at $n=81$ for $q=2$, $r=\lfloor n/10\rfloor$, and at $n=71$ for $q=5$,
+of $n$; it drops below $1$ for good at $n=61$ for $q=2$, $r=\lfloor n/10\rfloor$, and at $n=66$ for $q=5$,
 $r=\lfloor n/5\rfloor$. The dotted lines mark the thresholds $52$ and $97$ of \cite{Ha}.}\label{fig:ha}
 \end{figure} The gain over the printed constants comes from two points: the terms
 with $\deg g_0>q$, which carry the weight $e^\gamma(\log_qj+1)$, are summed with their own decay $q^{-c_2j}$
@@ -259,15 +276,15 @@ together, by $\hat X^{3/4}$ once. The repairs (i)--(iii) cost less than these ga
 assertion of \cite{Ha} & printed condition & criterion \eqref{eq:crit}\\
 \midrule
 $q\ge16$, $n\ge8$, $r\le n/4-\log_qn-1$ & fails for $q<23$ & holds\\
-$q\ge5$, $n\ge97$, $r\le n/5$ & fails for $q=5$ & holds, already for $n\ge71$\\
+$q\ge5$, $n\ge97$, $r\le n/5$ & fails for $q=5$ & holds, already for $n\ge66$\\
 all $q$, $n\ge52$, $r\le n/10$ & holds & holds for $q\ge3$, $n\ge21$;\\
- & & for $q=2$ only if $n\ge81$\\
+ & & for $q=2$ if $n\ne52,53,60$\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 We have not examined \cite[Lemmas~2.3 and 2.8]{Ha}, nor the results of \cite{Hayes,Pollack} on which they rest; the
-statements of this section are conditional on them in the form in which they are printed.
+statements of this note are conditional on them in the form in which they are printed.
 
 \begin{thebibliography}{9}
 
