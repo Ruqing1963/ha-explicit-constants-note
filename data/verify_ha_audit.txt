@@ -1,0 +1,46 @@
+============================================================================
+Audit of the constants in Ha (2016), Sections 3-4
+============================================================================
+  e^gamma = 1.781072
+  Table 1: constants as printed, at the boundary parameters
+    q   rho  B      C1      C2  C_(q^C2)       C3  C4log+C5       C8   C8[Ha]     RHS  RHS[Ha]
+   16 0.250  1  1.6000  0.2000    2.3493  10.6649    6.6538  11.3758    8.552  1.3004    0.994
+    5 0.200  2  1.6667  0.3333    2.4085  11.3698    9.1125  14.2122   12.335  1.0121    0.884
+    2 0.100  2  1.8182  0.6364    2.8037  16.2171   22.3026  44.6052   42.342  0.7917    0.764
+  smallest prime power q with printed RHS < 1 (and for all larger q <= 4096):
+    rho = 1/4, B = 1: q0 = 23   (fails for q in [2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19])
+    rho = 1/5, B = 2: q0 = 7   (fails for q in [2, 3, 4, 5])
+    rho = 1/10, B = 2: q0 = 2   (fails for q in [])
+
+  Table 2: corrected criterion (Proposition 4.1),
+  Xi = C_(q) * sum_{j>=J} w_q(j) q^(-c2(rho) j) + q^(-B)/(1-2q^(-4)) < 1
+    rho*  J* |  q0 (B=1)   Xi(q0) |  q0 (B=2)   Xi(q0) |  Xi(q=16,B=1)
+     1/4   4 |        16   0.8040 |        13   0.9507 |        0.8040
+     1/5   5 |         5   0.9111 |         5   0.7506 |        0.1098
+     1/6   6 |         4   0.6138 |         4   0.4249 |        0.0658
+     1/8   8 |         3   0.4750 |         3   0.2472 |        0.0625
+    1/10  10 |         3   0.3573 |         2   0.8362 |        0.0625
+  Table 3 / Theorem 1.1(c): the criterion (4.1),
+    S(r/n, J) + S((r+1)/n, J*)/(q-1) + n q^(r-n/4)/(1-2q^(-n/2)) < 1,
+  for the three families of Ha's Theorem 1.3 (n scanned up to 3000):
+    q=16, r=floor(n/4-log_q n-1)   holds for all n >=   12 (value at Ha's n = 8: nan; value at n0: 0.0492)
+    q=5,  r=floor(n/5)             holds for all n >=   71 (value at Ha's n = 97: 0.6943; value at n0: 0.8918)
+    q=7,  r=floor(n/5)             holds for all n >=   41 (value at Ha's n = 97: 0.2562; value at n0: 0.7899)
+    q=2,  r=floor(n/10)            holds for all n >=   81 (value at Ha's n = 52: 1.4662; value at n0: 0.9678)
+    q=3,  r=floor(n/10)            holds for all n >=   21 (value at Ha's n = 52: 0.0581; value at n0: 0.8756)
+    q=4,  r=floor(n/10)            holds for all n >=   13 (value at Ha's n = 52: 0.0073; value at n0: 0.6937)
+  tail n > 3000 (rho <= 1/m, rho* <= 1/m + 1/3000, J, J* >= m):
+    q = 5, m = 5: bound 0.7119  ok
+    q = 2, m = 10: bound 0.5530  ok
+    q = 3, m = 10: bound 0.0156  ok
+  largest rho* = 1/m (J* = m) for which the criterion holds, B = 1:
+    q =  2: m >= 11
+    q =  3: m >= 7
+    q =  4: m >= 6
+    q =  5: m >= 5
+    q =  7: m >= 5
+    q =  8: m >= 5
+    q =  9: m >= 5
+    q = 16: m >= 4
+
+ALL CHECKS PASSED
