@@ -21,3 +21,12 @@ The statements are conditional on Lemmas 2.3 and 2.8 of Ha's paper as printed.
 | `code/make_figure.py` | Figures 2-4 (matplotlib, numpy); Figure 1 is TikZ in the source |
 | `figures/fig_q.pdf`, `fig_n.pdf`, `fig_region.pdf` | the condition against `q`; criterion (4.1) against `n`; criterion (4.1) in the `(n, r)` plane |
 | `data/verify_ha_audit.txt` | output of the script |
+
+## License
+
+* The code in `code/` is released under the MIT License, see [`LICENSE`](LICENSE).
+* The note (`ha_explicit_constants_note.tex`, `.pdf`), the figures in `figures/` and the output in `data/` are
+  licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), see
+  [`LICENSE-CC-BY-4.0.txt`](LICENSE-CC-BY-4.0.txt).
+
+Copyright (c) 2026 Ruqing Chen.
