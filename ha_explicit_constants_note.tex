@@ -7,6 +7,10 @@
 \usepackage{graphicx}
 \graphicspath{{figures/}}
 \usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+\definecolor{figblue}{HTML}{2A78D6}
+\definecolor{figorange}{HTML}{EB6834}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 
@@ -23,7 +27,7 @@
 
 \title[Explicit prescribed coefficients]{A note on the explicit theorem of Ha on irreducible polynomials with
 prescribed coefficients}
-\thanks{Code and data: \url{https://github.com/Ruqing1963/ha-explicit-constants-note}}
+\thanks{DOI: \href{https://doi.org/10.5281/zenodo.24269019}{10.5281/zenodo.24269019}.\newline\indent Code and data: \url{https://github.com/Ruqing1963/ha-explicit-constants-note}}
 \author{Ruqing Chen}
 \address{GUT Geoservice Inc., Montreal, Canada}
 \email{ruqing@hotmail.com}
@@ -88,7 +92,7 @@ $1>C_8q^{-C_2/\rho}+q^{-B}$ for $r\le X/4-\log_qX-B$. Table~\ref{tab:ha} evaluat
 values of $\rho$, with $C_1=2/(1+\rho)$, which is the value behind the exponent $1/\rho-4/(\rho+1)=C_2/\rho$ of
 \cite[Theorem~1.1]{Ha}. The exponents $q^{C_2/\rho}$ agree with those used in \cite{Ha}; the values of $C_8$ do
 not, and in the first two cases the condition fails. With the printed formulas it holds at $\rho=1/4$, $B=1$ only for
-$q\ge23$, and at $\rho=1/5$, $B=2$ only for $q\ge7$.
+$q\ge23$, and at $\rho=1/5$, $B=2$ only for $q\ge7$ (Figure~\ref{fig:q}).
 
 \begin{table}[ht]
 \centering
@@ -195,7 +199,7 @@ To bound $E(\mathcal I)$: by \cite[Lemma~2.7]{Ha} only $\deg g_0\ge J=\lceil X/(
 $J\le j\le X/2$. Choose a window of $2j$ consecutive positions in $\{0,\dots,X-1\}$ containing at most
 $\kappa\rho\cdot2j$ elements of $\mathcal I$, with $\kappa\le2/(1+\rho)$: if $2j$ divides $X$ one may take
 $\kappa=1$; if $X/2j>2$, the $\lfloor X/2j\rfloor$ disjoint windows give $\kappa\le3/2\le2/(1+\rho)$; and if
-$1<X/2j<2$, the two extreme windows overlap in $4j-X$ positions and contain together at most
+$1<X/2j<2$, the two extreme windows (Figure~\ref{fig:window}) overlap in $4j-X$ positions and contain together at most
 $r+\min(r,4j-X)$ elements, which gives $\kappa\le2/(1+\rho)$ in both cases. As in the proof of
 \cite[Lemma~2.6]{Ha}, shifting by the window and using that the fractions $c/g_0$ with $\deg g_0\le j$ are
 $q^{-2j}$-separated,
@@ -210,6 +214,25 @@ $1-\bigl((q-2)E(\mathcal I)+E(\mathcal I^+)\bigr)/(q-1)>Xq^{r-X/4}/(1-2q^{-X/2})
 that $1-E(\mathcal I)$ exceeds the same quantity, and this follows from \eqref{eq:crit} because
 $\Sigma_q(\rho,J)\le\Sigma_q((r+1)/n,\lceil n/(r+2)\rceil)$.
 \end{proof}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=0.5cm,y=0.5cm,font=\footnotesize]
+  \fill[black!8] (10,-0.25) rectangle (16,1.25);
+  \foreach \k in {1,4,11,14,20,24} \fill[figblue] (\k,0) rectangle ++(1,1);
+  \draw[black!50,line width=0.3pt] (0,0) grid (26,1);
+  \draw[line width=0.5pt] (0,0) rectangle (26,1);
+  \node[left] at (0,0.5) {$0$};
+  \node[right] at (26,0.5) {$X-1$};
+  \draw[black!50,line width=0.3pt] (10,1.25) -- (10,3.55) (16,1.25) -- (16,3.55);
+  \draw[|-|,line width=0.5pt] (0,1.9) -- (16,1.9) node[pos=0.31,fill=white,inner sep=2pt] {first window, $2j$ positions};
+  \draw[|-|,line width=0.5pt] (10,-0.9) -- (26,-0.9) node[pos=0.69,fill=white,inner sep=2pt] {last window, $2j$ positions};
+  \draw[<->,line width=0.4pt] (10,3.3) -- (16,3.3) node[midway,above] {overlap, $4j-X$ positions};\end{tikzpicture}
+\caption{The two extreme windows in the proof of Proposition~\ref{prop:restored} when $1<X/2j<2$, drawn for $X=26$,
+$j=8$, $r=6$. The cells are the positions $0,\dots,X-1$, and the filled cells are those of $\mathcal I$. The
+windows contain together $r$ elements plus those of the overlap, here $6+2$, so one of them contains at most $4$.}
+\label{fig:window}
+\end{figure}
 
 The left side of \eqref{eq:crit} is nondecreasing in $r$, and it is at most
 \begin{equation}\label{eq:simple}
@@ -244,7 +267,7 @@ $(r+1)/n\le1/4$. For $r\ge2$, $n/(r+2)\ge4(r+1+\log_qn)/(r+2)>3$, so $J^*\ge4$, 
 Table~\ref{tab:restored} applies. The case $r=1$ is the Hansen--Mullen conjecture, proved in \cite{Wan,HamMullen}.
 For the other two families we evaluated the left side of \eqref{eq:crit} for all $n\le3000$, with
 $r=\lfloor n/5\rfloor$, $q=5$ and with $r=\lfloor n/10\rfloor$, $q=2,3$: it is less than $1$ for $n\ge66$; for
-$n\ge54$, $n\ne60$; and for $n\ge21$, respectively (at $q=2$ it equals $1.0890$ for $n=52$). For larger $q$ we use
+$n\ge54$, $n\ne60$; and for $n\ge21$, respectively (at $q=2$ it equals $1.0890$, $1.0173$ and $1.0292$ for $n=52,53,60$; see Figure~\ref{fig:n}). For larger $q$ we use
 \eqref{eq:simple}: at $q=7$, $r=\lfloor n/5\rfloor$ it is at most $0.4595$ for $66\le n\le3000$, and at $q=4$,
 $r=\lfloor n/10\rfloor$ it is at most $0.3651$ for $21\le n\le3000$. For $n>3000$ we have $\rho\le1/m$,
 $\rho^*\le1/m+1/3000$ and $J,J^*\ge m$ with $m=5,10$, and \eqref{eq:simple} is bounded by $0.5741$ for $q\ge5$,
@@ -252,17 +275,39 @@ $m=5$, by $0.2778$ for $q=2$, $m=10$ and by $0.0105$ for $q\ge3$, $m=10$. Monoto
 \eqref{eq:simple}, completes the proof.
 \end{proof}
 
-Table~\ref{tab:status} and Figure~\ref{fig:ha} summarise the outcome.
+Table~\ref{tab:status} and Figures~\ref{fig:q}--\ref{fig:region} summarise the outcome.
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.95\textwidth]{fig_ha.pdf}
-\caption{Left: the quantity that must be less than $1$, at $\rho=1/4$, $B=1$: with the constants as printed in
-\cite{Ha} (it exceeds $1$ for $q<23$; the cross marks the value $0.994$ stated there for $q=16$), and the bound of
-Proposition~\ref{prop:restored} with $\rho^*=1/4$, $J^*=4$. Right: the left side of \eqref{eq:crit} as a function
-of $n$; it drops below $1$ for good at $n=61$ for $q=2$, $r=\lfloor n/10\rfloor$, and at $n=66$ for $q=5$,
-$r=\lfloor n/5\rfloor$. The dotted lines mark the thresholds $52$ and $97$ of \cite{Ha}.}\label{fig:ha}
-\end{figure} The gain over the printed constants comes from two points: the terms
+\includegraphics[width=\textwidth]{fig_q.pdf}
+\caption{The quantity that must be less than $1$, as a function of the prime power $q$, in the three cases of
+Table~\ref{tab:ha}: the right-hand side $C_8q^{-C_2/\rho}+q^{-B}$ with the constants as printed in \cite{Ha}, and
+the bound of Proposition~\ref{prop:restored} with $\rho^*=\rho$, $J^*=1/\rho$ (Table~\ref{tab:restored}). The
+crosses mark the values $0.994$, $0.884$ and $0.764$ stated in \cite{Ha} for $q=16,5,2$. The printed condition
+fails for $q<23$ in the first case and for $q\le5$ in the second.}\label{fig:q}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{fig_n.pdf}
+\caption{Left: the left side of \eqref{eq:crit} as a function of $n$; it drops below $1$ for good at $n=61$ for
+$q=2$, $r=\lfloor n/10\rfloor$, and at $n=66$ for $q=5$, $r=\lfloor n/5\rfloor$. The dotted lines mark the
+thresholds $52$ and $97$ of \cite{Ha}. Right: for $q=2$ the first term of \eqref{eq:crit} vanishes, and the bars
+show the other two. The sum jumps when $r$ increases and drops when $\lceil n/(r+2)\rceil$ increases; for
+$n\ge52$ it exceeds $1$ exactly at the labelled values $n=52,53,60$.}\label{fig:n}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{fig_region.pdf}
+\caption{The left side of \eqref{eq:crit} for $8\le n\le120$ and $1\le r$, $3(r+1)<n$, on a logarithmic colour
+scale: the criterion holds in the blue cells. The solid line is the largest $r$ for which it holds, and the
+dashed line is the assertion of \cite[Theorem~1.3]{Ha} for that $q$.}\label{fig:region}
+\end{figure}
+
+Figure~\ref{fig:region} shows how much room the criterion leaves. For $52\le n\le120$ the largest admissible $r$
+exceeds $\lfloor n/10\rfloor$ by $3$ to $9$ when $q=3$, but by at most $2$ when $q=2$, where it falls short by $1$
+at $n=52,53,60$; for $q=5$ and $66\le n\le120$ it exceeds $\lfloor n/5\rfloor$ by at most $2$. The gain over the printed constants comes from two points: the terms
 with $\deg g_0>q$, which carry the weight $e^\gamma(\log_qj+1)$, are summed with their own decay $q^{-c_2j}$
 instead of being bounded by the first term; and the error terms of the major and minor arcs are estimated
 together, by $\hat X^{3/4}$ once. The repairs (i)--(iii) cost less than these gains, except for $q=2$.
